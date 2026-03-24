@@ -1,0 +1,73 @@
+# Global ignores for AI Job Recommendation System
+
+# OS files
+.DS_Store
+Thumbs.db
+$RECYCLE.BIN/
+
+# Editor and IDE
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/
+*.sublime-project
+*.sublime-workspace
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+*.swo
+tmp/
+temp/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+.python-version
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.ipynb_checkpoints/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+apps/backend/.venv/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Node / Angular / Ionic / Capacitor
+**/node_modules/
+apps/frontend/.angular/
+apps/frontend/.angular/cache/
+apps/frontend/.ionic/
+apps/frontend/www/
+apps/frontend/platforms/
+apps/frontend/plugins/
+apps/frontend/dist/
+apps/frontend/out-tsc/
+apps/frontend/coverage/
+
+# Frontend package manager logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Build and cache artifacts
+.cache/
+.sass-cache/
