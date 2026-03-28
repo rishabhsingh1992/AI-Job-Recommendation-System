@@ -33,13 +33,11 @@ pip install -r requirements.txt
 
 ### 2) Backend run command
 
-When your FastAPI entrypoint exists, run:
+From `apps/backend`, run:
 
 ```powershell
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
-
-If your module path is different, replace `app.main:app` with your actual import path.
 
 ### 3) Frontend setup
 
