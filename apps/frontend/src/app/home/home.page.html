@@ -22,19 +22,19 @@
         </ion-note>
 
         <ion-item>
-          <ion-label position="stacked">Experience</ion-label>
-          <ion-input formControlName="experience" placeholder="e.g. 5 years as full-stack developer"></ion-input>
+          <ion-label position="stacked">Years of experience</ion-label>
+          <ion-input formControlName="yearsExperience" type="number" min="0" placeholder="e.g. 5"></ion-input>
         </ion-item>
-        <ion-note color="danger" *ngIf="recommendationForm.controls.experience.touched && recommendationForm.controls.experience.invalid">
-          Experience is required.
+        <ion-note color="danger" *ngIf="recommendationForm.controls.yearsExperience.touched && recommendationForm.controls.yearsExperience.invalid">
+          Years of experience is required.
         </ion-note>
 
         <ion-item>
-          <ion-label position="stacked">Preferences</ion-label>
+          <ion-label position="stacked">Preferred locations</ion-label>
           <ion-textarea
-            formControlName="preferences"
+            formControlName="preferredLocations"
             autoGrow="true"
-            placeholder="Preferred location, role type, salary range, and industries"
+            placeholder="Comma-separated locations (e.g. New York, Remote, Austin)"
           ></ion-textarea>
         </ion-item>
 
@@ -71,10 +71,10 @@
       <ion-card-content>
         <p *ngIf="result.reason">{{ result.reason }}</p>
 
-        <ion-badge color="primary" *ngIf="result.score !== undefined">Match: {{ result.score }}%</ion-badge>
+        <ion-badge color="primary">Match: {{ formatScore(result.score) }}</ion-badge>
 
-        <div class="chips" *ngIf="result.matchedSkills?.length">
-          <ion-chip *ngFor="let skill of result.matchedSkills">
+        <div class="chips" *ngIf="result.matched_skills.length">
+          <ion-chip *ngFor="let skill of result.matched_skills">
             <ion-label>{{ skill }}</ion-label>
           </ion-chip>
         </div>
