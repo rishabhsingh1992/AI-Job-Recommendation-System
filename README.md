@@ -74,6 +74,8 @@ From `apps/backend`, run:
 uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
+The backend API will be available at `http://localhost:8000`.
+
 ### 3) Frontend setup
 
 From `apps/frontend`:
@@ -84,6 +86,31 @@ npm run start
 ```
 
 By default, Angular dev server runs at `http://localhost:4200`.
+
+### 4) Frontend/backend endpoint configuration
+
+The frontend resolves the backend URL in this order:
+
+1. Runtime config file: `apps/frontend/src/assets/config/app-config.json` (`apiBaseUrl`)
+2. Angular environment fallback (`environment.ts` or `environment.prod.ts`)
+
+#### Local development (recommended)
+
+Use the committed local config:
+
+- `apps/frontend/src/environments/environment.ts` points to `http://localhost:8000`
+- `apps/frontend/src/assets/config/app-config.json` also points to `http://localhost:8000`
+
+Start backend on port `8000` and frontend on port `4200`; no additional frontend edits are required.
+
+#### Production deployment options
+
+Choose one strategy:
+
+- **Runtime configuration (preferred):** generate or replace `/assets/config/app-config.json` at deploy time with your real API URL.
+- **Build-time replacement:** set `apiBaseUrl` in `apps/frontend/src/environments/environment.prod.ts` before running the production build.
+
+If runtime config is missing, the frontend falls back to the value in `environment.prod.ts`.
 
 ## Useful Commands
 
