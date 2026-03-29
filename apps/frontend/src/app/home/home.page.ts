@@ -61,8 +61,8 @@ import {
 export class HomePage {
   recommendationForm = this.formBuilder.group({
     skills: ['', [Validators.required]],
-    experience: ['', [Validators.required]],
-    preferences: [''],
+    yearsExperience: ['', [Validators.required]],
+    preferredLocations: [''],
   });
 
   recommendations: RecommendationResult[] = [];
@@ -78,18 +78,30 @@ export class HomePage {
     return this.recommendations.length > 0;
   }
 
+  formatScore(score: number): string {
+    const percentage = score <= 1 ? score * 100 : score;
+    return `${percentage.toFixed(1)}%`;
+  }
+
   submit(): void {
     if (this.recommendationForm.invalid || this.loading) {
       this.recommendationForm.markAllAsTouched();
       return;
     }
 
-    const { skills, experience, preferences } = this.recommendationForm.getRawValue();
+    const { skills, yearsExperience, preferredLocations } = this.recommendationForm.getRawValue();
 
     const skillList = (skills ?? '')
       .split(',')
       .map((skill) => skill.trim())
       .filter(Boolean);
+
+    const locationList = (preferredLocations ?? '')
+      .split(',')
+      .map((location) => location.trim())
+      .filter(Boolean);
+
+    const parsedYearsExperience = Number.parseInt((yearsExperience ?? '').toString(), 10);
 
     this.loading = true;
     this.errorMessage = '';
@@ -98,8 +110,8 @@ export class HomePage {
     this.recommendationApi
       .getRecommendations({
         skills: skillList,
-        experience: experience ?? '',
-        preferences: preferences ?? '',
+        years_experience: Number.isNaN(parsedYearsExperience) ? 0 : Math.max(parsedYearsExperience, 0),
+        preferred_locations: locationList,
       })
       .subscribe({
         next: (response) => {

@@ -6,18 +6,17 @@ import { environment } from '../../environments/environment';
 
 export interface RecommendationRequest {
   skills: string[];
-  experience: string;
-  preferences: string;
+  years_experience: number;
+  preferred_locations: string[];
 }
 
 export interface RecommendationResult {
-  id?: string;
   title: string;
-  company?: string;
-  location?: string;
-  score?: number;
-  reason?: string;
-  matchedSkills?: string[];
+  score: number;
+  company?: string | null;
+  location?: string | null;
+  reason?: string | null;
+  matched_skills: string[];
 }
 
 export interface RecommendationResponse {

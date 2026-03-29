@@ -7,6 +7,41 @@ A full-stack application for generating job recommendations using a Python backe
 - `apps/backend` - Python backend dependencies and API service code.
 - `apps/frontend` - Angular + Ionic client application.
 
+## API Contract (Canonical DTO)
+
+`POST /recommendations`
+
+Request JSON:
+
+```json
+{
+  "skills": ["Python", "FastAPI", "Angular"],
+  "years_experience": 4,
+  "preferred_locations": ["Remote", "New York"]
+}
+```
+
+Response JSON:
+
+```json
+{
+  "recommendations": [
+    {
+      "title": "Backend Engineer",
+      "score": 0.92,
+      "company": "Acme Corp",
+      "location": "Remote",
+      "reason": "Strong overlap with required backend skills.",
+      "matched_skills": ["Python", "FastAPI"]
+    }
+  ]
+}
+```
+
+Notes:
+- `score` is a numeric match score from the backend (commonly 0-1; frontend renders it as a percentage).
+- `company`, `location`, and `reason` are optional in each recommendation item.
+
 ## Current Status
 
 - Frontend scaffold is present and ready to run.
