@@ -112,6 +112,28 @@ Choose one strategy:
 
 If runtime config is missing, the frontend falls back to the value in `environment.prod.ts`.
 
+### 5) Backend CORS allowed origins
+
+The backend enables CORS for recommendation requests and reads allowed origins from environment variables:
+
+- `CORS_ALLOWED_ORIGINS` (preferred)
+- `ALLOWED_ORIGINS` (fallback alias)
+
+Set either variable to a comma-separated list of exact origins (scheme + host + port), for example:
+
+```bash
+export CORS_ALLOWED_ORIGINS="https://jobs.example.com,https://admin.example.com"
+```
+
+Safe local defaults are used when no variable is set:
+
+- `http://localhost:4200`
+- `http://127.0.0.1:4200`
+- `http://localhost:8100`
+- `http://127.0.0.1:8100`
+
+The API allows `POST`/`OPTIONS` methods and `Content-Type`/`Authorization` headers for cross-origin recommendation calls.
+
 ## Useful Commands
 
 From `apps/frontend`:
