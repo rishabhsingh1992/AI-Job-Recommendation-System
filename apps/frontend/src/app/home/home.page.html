@@ -71,7 +71,7 @@
       <ion-card-content>
         <p *ngIf="result.reason">{{ result.reason }}</p>
 
-        <ion-badge color="primary">Match: {{ formatScore(result.score) }}</ion-badge>
+        <ion-badge color="primary">Match: {{ (result.score * 100) | number: '1.1-1' }}%</ion-badge>
 
         <div class="chips" *ngIf="result.matched_skills.length">
           <ion-chip *ngFor="let skill of result.matched_skills">

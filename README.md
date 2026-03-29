@@ -39,7 +39,7 @@ Response JSON:
 ```
 
 Notes:
-- `score` is a numeric match score from the backend (commonly 0-1; frontend renders it as a percentage).
+- `score` is a normalized float in the inclusive range `[0, 1]`; frontend renders it as a percentage for display.
 - `company`, `location`, and `reason` are optional in each recommendation item.
 
 ## Current Status

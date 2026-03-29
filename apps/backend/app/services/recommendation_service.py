@@ -9,6 +9,7 @@ _BASE_ROLES: list[tuple[str, set[str]]] = [
 
 
 def score_recommendations(payload: RecommendationRequest) -> RecommendationResponse:
+    """Return recommendations with normalized scores in [0, 1]."""
     normalized_skills = {skill.lower() for skill in payload.skills}
     experience_bonus = min(payload.years_experience * 0.02, 0.2)
 
