@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { RuntimeConfigService } from './runtime-config.service';
 
 export interface RecommendationRequest {
   skills: string[];
@@ -27,11 +27,11 @@ export interface RecommendationResponse {
   providedIn: 'root',
 })
 export class RecommendationApiService {
-  private readonly endpoint = `${environment.apiBaseUrl}/recommendations`;
-
-  constructor(private readonly http: HttpClient) {}
+  private readonly http = inject(HttpClient);
+  private readonly runtimeConfigService = inject(RuntimeConfigService);
 
   getRecommendations(payload: RecommendationRequest): Observable<RecommendationResponse> {
-    return this.http.post<RecommendationResponse>(this.endpoint, payload);
+    const endpoint = `${this.runtimeConfigService.apiBaseUrl}/recommendations`;
+    return this.http.post<RecommendationResponse>(endpoint, payload);
   }
 }
