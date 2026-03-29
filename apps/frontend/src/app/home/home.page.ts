@@ -78,11 +78,6 @@ export class HomePage {
     return this.recommendations.length > 0;
   }
 
-  formatScore(score: number): string {
-    const percentage = score <= 1 ? score * 100 : score;
-    return `${percentage.toFixed(1)}%`;
-  }
-
   submit(): void {
     if (this.recommendationForm.invalid || this.loading) {
       this.recommendationForm.markAllAsTouched();

@@ -9,7 +9,12 @@ class RecommendationRequest(BaseModel):
 
 class JobRecommendation(BaseModel):
     title: str
-    score: float
+    score: float = Field(
+        ...,
+        ge=0.0,
+        le=1.0,
+        description="Normalized match score in the range [0, 1].",
+    )
     company: str | None = None
     location: str | None = None
     reason: str | None = None
