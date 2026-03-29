@@ -1,20 +1,84 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+    <ion-title>AI Job Recommendations</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Candidate Profile</ion-card-title>
+      <ion-card-subtitle>Enter your details to receive tailored roles.</ion-card-subtitle>
+    </ion-card-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+    <ion-card-content>
+      <form [formGroup]="recommendationForm" (ngSubmit)="submit()" class="profile-form">
+        <ion-item>
+          <ion-label position="stacked">Skills</ion-label>
+          <ion-input formControlName="skills" placeholder="Type comma-separated skills"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="recommendationForm.controls.skills.touched && recommendationForm.controls.skills.invalid">
+          Skills are required.
+        </ion-note>
+
+        <ion-item>
+          <ion-label position="stacked">Experience</ion-label>
+          <ion-input formControlName="experience" placeholder="e.g. 5 years as full-stack developer"></ion-input>
+        </ion-item>
+        <ion-note color="danger" *ngIf="recommendationForm.controls.experience.touched && recommendationForm.controls.experience.invalid">
+          Experience is required.
+        </ion-note>
+
+        <ion-item>
+          <ion-label position="stacked">Preferences</ion-label>
+          <ion-textarea
+            formControlName="preferences"
+            autoGrow="true"
+            placeholder="Preferred location, role type, salary range, and industries"
+          ></ion-textarea>
+        </ion-item>
+
+        <ion-button expand="block" type="submit" [disabled]="loading">
+          <ion-spinner slot="start" *ngIf="loading" name="crescent"></ion-spinner>
+          {{ loading ? 'Getting recommendations...' : 'Get recommendations' }}
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="errorMessage">
+    <ion-card-content>
+      <ion-text color="danger">{{ errorMessage }}</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!loading && !errorMessage && !hasResults">
+    <ion-card-content>
+      <ion-text color="medium">Submit your profile to view recommendations.</ion-text>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="hasResults" class="results-list">
+    <ion-card *ngFor="let result of recommendations">
+      <ion-card-header>
+        <ion-card-title>{{ result.title }}</ion-card-title>
+        <ion-card-subtitle>
+          {{ result.company || 'Unknown company' }}
+          <span *ngIf="result.location"> • {{ result.location }}</span>
+        </ion-card-subtitle>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p *ngIf="result.reason">{{ result.reason }}</p>
+
+        <ion-badge color="primary" *ngIf="result.score !== undefined">Match: {{ result.score }}%</ion-badge>
+
+        <div class="chips" *ngIf="result.matchedSkills?.length">
+          <ion-chip *ngFor="let skill of result.matchedSkills">
+            <ion-label>{{ skill }}</ion-label>
+          </ion-chip>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
